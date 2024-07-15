@@ -125,6 +125,18 @@ const Admin = () => {
       maxWidth: 600,
     }}
   >
+    
+    <Form.Item
+      name='name'
+      label="Name"
+      rules={[
+        {
+          required: true,
+        },
+      ]}
+    >
+      <Input />
+    </Form.Item>
     <Form.Item
       name='image'
       label="Image"
