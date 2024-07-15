@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState } from 'react';
 import { Drawer, Button, Form, Input } from 'antd';
 
@@ -23,17 +24,14 @@ const Admin = () => {
   const [loading, setLoading] = React.useState(true);
   const [userId , setUserId] = useState()
 
-  const showLoading = async (e) => {
-    e.preventDefault() 
+  const showLoading = async (values) => {
+    console.log(values)
 
-
-
-    console.log(e)
     try{
-      const response = await axios.post(`https://back-commerce-production.up.railway.app/api/v1/products`, e, {
+      const response = await axios.post(`https://back-commerce-production.up.railway.app/api/v1/products`, values, {
         headers: {
           "Content-Type" : "application/json",
-          Authorization : `Bearer ${localStorage.getItem("token")}`
+          "Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}`
         }
       })
       console.log(response)
@@ -53,12 +51,11 @@ const Admin = () => {
   }
 
   const onFinish = async (values) => {
-    console.log(values)
     try{
       const response = await axios.put(`https://back-commerce-production.up.railway.app/api/v1/products/${userId}`, values, {
         headers: {
           "Content-Type" : "application/json",
-          Authorization : `Bearer ${localStorage.getItem("token")}`
+          "Authorization" : `Bearer ${JSON.parse(localStorage.getItem("token"))}`
         }
       })
       console.log(response)
@@ -87,7 +84,7 @@ const Admin = () => {
       const response = await axios.delete(`https://back-commerce-production.up.railway.app/api/v1/products/${id}`, {
         headers: {
           "Content-Type" : "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
         }
       })
       console.log(response)
@@ -123,10 +120,10 @@ const Admin = () => {
     {...layout}
     name="nest-messages"
     onFinish={onFinish}
+    onFinish={showLoading}
     style={{
       maxWidth: 600,
     }}
-    onSubmitCapture={showLoading}
   >
     <Form.Item
       name='image'
